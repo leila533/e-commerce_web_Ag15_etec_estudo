@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VIVA FIT — Moda Fitness</title>
+
+  <!-- W3.CSS Framework -->
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <style>
+    :root {
+      --preto:    #0f0f0f;
+      --branco:   #ffffff;
+      --cinza:    #f4f4f2;
+      --borda:    #e0ddd8;
+      --texto:    #3a3a3a;
+      --mudo:     #888;
+      --acento:   #b08d5b;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'DM Sans',sans-serif;color:var(--texto);background:var(--branco);}
+    a{text-decoration:none;color:inherit;}
+    img{display:block;width:100%;object-fit:cover;}
+
+    /* ---- TOPBAR ---- */
+    .topbar{background:var(--preto);color:#aaa;text-align:center;padding:.45rem;font-size:.72rem;letter-spacing:.12em;}
+    .topbar span{color:var(--acento);}
+
+    /* ---- NAVBAR ---- */
+    .navbar{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:.9rem 3rem;border-bottom:1px solid var(--borda);
+      position:sticky;top:0;background:var(--branco);z-index:100;
+    }
+    .nav-logo{font-family:'Playfair Display',serif;font-size:1.5rem;letter-spacing:.1em;color:var(--preto);}
+    .nav-logo span{color:var(--acento);}
+    .nav-links{display:flex;gap:2rem;list-style:none;}
+    .nav-links a{font-size:.78rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--texto);transition:color .2s;}
+    .nav-links a:hover{color:var(--acento);}
+    .nav-actions{display:flex;align-items:center;gap:1.2rem;}
+    .nav-actions a{font-size:1rem;color:var(--texto);transition:color .2s;}
+    .nav-actions a:hover{color:var(--acento);}
+    .cart-badge{position:relative;}
+    .cart-badge sup{
+      position:absolute;top:-6px;right:-8px;
+      background:var(--acento);color:var(--branco);
+      border-radius:50%;width:16px;height:16px;
+      font-size:.6rem;display:flex;align-items:center;justify-content:center;
+    }
+
+    /* ---- SEÇÕES ---- */
+    section{display:none;}
+    section.ativa{display:block;}
+
+    /* ---- HERO ---- */
+    .hero{
+      display:grid;grid-template-columns:1fr 1fr;min-height:88vh;
+    }
+    .hero-txt{
+      background:var(--cinza);
+      display:flex;flex-direction:column;justify-content:center;
+      padding:5rem 4rem;
+    }
+    .hero-tag{font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--acento);margin-bottom:1.2rem;}
+    .hero-txt h1{font-family:'Playfair Display',serif;font-size:3.4rem;line-height:1.1;color:var(--preto);margin-bottom:1.2rem;}
+    .hero-txt p{font-size:.9rem;color:var(--mudo);line-height:1.8;max-width:380px;margin-bottom:2rem;}
+    .btn-primary{
+      display:inline-block;background:var(--preto);color:var(--branco);
+      padding:.85rem 2.2rem;font-size:.75rem;font-weight:500;
+      letter-spacing:.14em;text-transform:uppercase;border:none;cursor:pointer;
+      transition:background .2s;
+    }
+    .btn-primary:hover{background:var(--acento);}
+    .btn-outline{
+      display:inline-block;background:transparent;color:var(--preto);
+      padding:.8rem 2rem;font-size:.75rem;font-weight:500;
+      letter-spacing:.14em;text-transform:uppercase;
+      border:1.5px solid var(--preto);cursor:pointer;transition:all .2s;
+    }
+    .btn-outline:hover{background:var(--preto);color:var(--branco);}
+    .hero-img{background:#d6d0c8;overflow:hidden;}
+    .hero-img img{height:100%;width:100%;object-fit:cover;}
+    .hero-img .ph{
+      height:100%;display:flex;flex-direction:column;
+      align-items:center;justify-content:center;gap:.6rem;
+      color:var(--mudo);font-size:.8rem;letter-spacing:.1em;
+    }
+    .hero-img .ph i{font-size:2.5rem;opacity:.4;}
+
+    /* ---- CATEGORIAS ---- */
+    .cats{padding:4rem 3rem;background:var(--branco);}
+    .sec-label{font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--acento);margin-bottom:.5rem;}
+    .sec-title{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--preto);margin-bottom:2rem;}
+    .cats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;}
+    .cat-card{position:relative;overflow:hidden;cursor:pointer;}
+    .cat-card .cat-img{height:260px;background:var(--cinza);transition:transform .4s;}
+    .cat-card .cat-img img{height:100%;}
+    .cat-card .cat-img .ph{height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.4rem;color:var(--mudo);font-size:.75rem;}
+    .cat-card:hover .cat-img{transform:scale(1.03);}
+    .cat-card h4{margin-top:.8rem;font-family:'Playfair Display',serif;font-size:1rem;color:var(--preto);}
+    .cat-card span{font-size:.72rem;color:var(--mudo);}
+
+    /* ---- PRODUTOS ---- */
+    .produtos{padding:4rem 3rem;background:var(--cinza);}
+    .prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
+    .prod-card{background:var(--branco);cursor:pointer;}
+    .prod-card .prod-img{height:300px;overflow:hidden;position:relative;}
+    .prod-card .prod-img img{height:100%;transition:transform .4s;}
+    .prod-card .prod-img .ph{height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.4rem;color:var(--mudo);font-size:.75rem;background:var(--cinza);}
+    .prod-card:hover .prod-img img{transform:scale(1.05);}
+    .prod-badge{
+      position:absolute;top:12px;left:12px;
+      background:var(--acento);color:var(--branco);
+      font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;
+      padding:.25rem .6rem;
+    }
+    .prod-info{padding:1rem 1.2rem 1.4rem;}
+    .prod-info .marca{font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--acento);}
+    .prod-info h3{font-family:'Playfair Display',serif;font-size:1rem;color:var(--preto);margin:.3rem 0 .5rem;}
+    .prod-info .preco{font-size:.85rem;color:var(--texto);}
+    .prod-info .preco s{color:var(--mudo);margin-right:.4rem;}
+    .prod-info .preco strong{color:var(--preto);}
+    .prod-info .stars{font-size:.65rem;color:var(--acento);margin-top:.3rem;}
+    .prod-actions{display:flex;gap:.5rem;padding:0 1.2rem 1.2rem;}
+    .btn-cart{flex:1;background:var(--preto);color:var(--branco);border:none;padding:.7rem;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:background .2s;}
+    .btn-cart:hover{background:var(--acento);}
+    .btn-wish{width:40px;border:1.5px solid var(--borda);background:transparent;cursor:pointer;color:var(--mudo);font-size:.85rem;transition:all .2s;}
+    .btn-wish:hover{border-color:var(--acento);color:var(--acento);}
+
+    /* ---- BANNER MIDDLE ---- */
+    .banner-mid{
+      background:var(--preto);padding:4rem 3rem;
+      display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;
+    }
+    .banner-mid h2{font-family:'Playfair Display',serif;font-size:2.2rem;color:var(--branco);line-height:1.2;}
+    .banner-mid h2 span{color:var(--acento);}
+    .banner-mid p{color:#777;font-size:.85rem;line-height:1.7;max-width:340px;margin-top:.6rem;}
+
+    /* ---- DEPOIMENTOS ---- */
+    .depoimentos{padding:4rem 3rem;background:var(--branco);}
+    .dep-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2rem;}
+    .dep-card{border:1px solid var(--borda);padding:1.8rem;}
+    .dep-stars{color:var(--acento);font-size:.75rem;margin-bottom:.8rem;}
+    .dep-card p{font-size:.85rem;color:var(--mudo);line-height:1.75;font-style:italic;}
+    .dep-autor{margin-top:1rem;font-size:.75rem;font-weight:500;color:var(--preto);}
+
+    /* ---- PARCEIROS ---- */
+    .parceiros-sec{padding:4rem 3rem;background:var(--cinza);}
+    .par-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:2rem;}
+    .par-card{background:var(--branco);border:1px solid var(--borda);padding:2rem;display:flex;flex-direction:column;align-items:center;gap:.8rem;transition:border-color .2s;}
+    .par-card:hover{border-color:var(--acento);}
+    .par-logo{width:64px;height:64px;border-radius:50%;background:var(--cinza);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:.9rem;color:var(--texto);}
+    .par-card h4{font-family:'Playfair Display',serif;font-size:.95rem;color:var(--preto);}
+    .par-card p{font-size:.75rem;color:var(--mudo);text-align:center;line-height:1.6;}
+
+    /* ---- FAQ ---- */
+    .faq-sec{padding:4rem 3rem;background:var(--branco);max-width:780px;margin:0 auto;}
+    .faq-item{border-bottom:1px solid var(--borda);}
+    .faq-q{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:1.2rem 0;cursor:pointer;font-size:.88rem;font-weight:500;color:var(--preto);
+    }
+    .faq-q i{color:var(--acento);font-size:.78rem;transition:transform .25s;}
+    .faq-item.aberto .faq-q i{transform:rotate(180deg);}
+    .faq-a{max-height:0;overflow:hidden;transition:max-height .3s;font-size:.83rem;color:var(--mudo);line-height:1.8;}
+    .faq-item.aberto .faq-a{max-height:200px;padding-bottom:1.2rem;}
+
+    /* ---- FOOTER ---- */
+    footer{background:var(--preto);padding:3rem;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:2rem;}
+    .foot-brand .nav-logo{font-size:1.3rem;margin-bottom:.8rem;}
+    .foot-brand p{font-size:.78rem;color:#666;line-height:1.7;max-width:220px;}
+    .foot-col h5{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:#555;margin-bottom:1rem;}
+    .foot-col ul{list-style:none;}
+    .foot-col ul li{margin-bottom:.5rem;}
+    .foot-col ul li a{font-size:.78rem;color:#666;transition:color .2s;}
+    .foot-col ul li a:hover{color:var(--acento);}
+    .foot-social{display:flex;gap:.8rem;margin-top:1rem;}
+    .foot-social a{width:34px;height:34px;border:1px solid #333;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#666;font-size:.8rem;transition:all .2s;}
+    .foot-social a:hover{color:var(--acento);border-color:var(--acento);}
+    .foot-bottom{background:#090909;padding:.9rem 3rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+    .foot-bottom span{font-size:.7rem;color:#444;}
+    .foot-bottom .pays{display:flex;gap:.6rem;align-items:center;}
+    .pay-badge{background:#1a1a1a;padding:.3rem .7rem;font-size:.6rem;letter-spacing:.1em;color:#555;border:1px solid #222;}
+
+    /* ---- RESPONSIVE ---- */
+    @media(max-width:900px){
+      .navbar{padding:.8rem 1.5rem;}
+      .nav-links{display:none;}
+      .hero{grid-template-columns:1fr;}
+      .hero-img{height:320px;}
+      .cats-grid,.prod-grid,.dep-grid,.par-grid{grid-template-columns:1fr 1fr;}
+      footer{grid-template-columns:1fr 1fr;}
+      .hero-txt{padding:3rem 2rem;}
+      .cats,.produtos,.parceiros-sec,.depoimentos,.faq-sec,.banner-mid{padding:2.5rem 1.5rem;}
+      .foot-bottom{padding:.9rem 1.5rem;}
+    }
+    @media(max-width:560px){
+      .cats-grid,.prod-grid,.dep-grid,.par-grid{grid-template-columns:1fr;}
+      footer{grid-template-columns:1fr;}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <span>FRETE GRÁTIS</span> em compras acima de R$199 &nbsp;·&nbsp; Use o cupom <span>VIVAFIT10</span> e ganhe 10% OFF
+  </div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-logo">VIVA<span>FIT</span></div>
+    <ul class="nav-links">
+      <li><a href="#" onclick="ir('home')">Home</a></li>
+      <li><a href="#" onclick="ir('loja')">Loja</a></li>
+      <li><a href="#" onclick="ir('parceiros')">Parceiros</a></li>
+      <li><a href="#" onclick="ir('faq')">FAQ</a></li>
+      <li><a href="#" onclick="ir('contato')">Contato</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="#" title="Buscar"><i class="fa fa-magnifying-glass"></i></a>
+      <a href="#" title="Minha conta"><i class="fa fa-user"></i></a>
+      <a href="#" class="cart-badge" title="Carrinho"><i class="fa fa-bag-shopping"></i><sup>2</sup></a>
+    </div>
+  </nav>
+
+
+  <!-- ===================== HOME ===================== -->
+  <section id="home" class="ativa">
+
+    <!-- Hero -->
+    <div class="hero">
+      <div class="hero-txt">
+        <p class="hero-tag">Nova coleção — Verão 2026</p>
+        <h1>Vista o movimento.<br/>Sinta a diferença.</h1>
+        <p>Peças de moda fitness que unem performance técnica, conforto e estilo para o seu dia a dia ativo.</p>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+          <a href="#" class="btn-primary" onclick="ir('loja')">Ver coleção</a>
+          <a href="#" class="btn-outline" onclick="ir('faq')">Saiba mais</a>
+        </div>
+      </div>
+      <div class="hero-img">
+        <div class="ph">
+          <img src="img/feliz dia dos namorados.png" alt="">
+        </div>
+      </div>
+    </div>
+
+    <!-- Categorias -->
+    <div class="cats">
+      <p class="sec-label">Explore</p>
+      <h2 class="sec-title">Compre por categoria</h2>
+      <div class="cats-grid">
+        <div class="cat-card">
+          <div class="cat-img">
+            <div class="ph"><i class="fa fa-image"></i><img src="img/legging.png" alt=""></div>
+          </div>
+          <h4>Leggings</h4>
+          <span>32 produtos</span>
+        </div>
+        <div class="cat-card">
+          <div class="cat-img">
+            <div class="ph"><i class="fa fa-image"></i><img src="img/top11.jpg" alt=""></div>
+          </div>
+          <h4>Tops & Sutiãs</h4>
+          <span>24 produtos</span>
+        </div>
+        <div class="cat-card">
+          <div class="cat-img">
+            <div class="ph"><i class="fa fa-image"></i><img src="img/conjuntos.jpg" alt=""></div>
+          </div>
+          <h4>Conjuntos</h4>
+          <span>18 produtos</span>
+        </div>
+        <div class="cat-card">
+          <div class="cat-img">
+            <div class="ph"><i class="fa fa-image"></i><img src="img/shot.png" alt=""></div>
+          </div>
+          <h4>Shorts</h4>
+          <span>15 produtos</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Produtos em destaque -->
+    <div class="produtos">
+      <p class="sec-label">Mais vendidos</p>
+      <h2 class="sec-title">Produtos em destaque</h2>
+      <div class="prod-grid">
+
+        <div class="prod-card">
+          <div class="prod-img">
+            <div class="ph"><i class="fa fa-image"></i><img src="img/produtos/Macacao.webp" alt=""></div>
+            <span class="prod-badge">Novo</span>
+          </div>
+          <div class="prod-info">
+            <p class="marca">Viva Fit</p>
+            <h3>Macacão Neymar</h3>
+            <p class="preco"><s>R$ 189,90</s> <strong>R$ 149,90</strong></p>
+            <p class="stars">★★★★★ <span style="color:var(--mudo)">(48)</span></p>
+          </div>
+          <div class="prod-actions">
+            <button class="btn-cart">Adicionar ao carrinho</button>
+            <button class="btn-wish"><i class="fa fa-heart"></i></button>
+          </div>
+        </div>
+
+        <div class="prod-card">
+          <div class="prod-img">
+            <div class="ph"><i class="fa fa-image"></i><img src="img/produtos/macaquinho.webp" alt=""></div>
+            <span class="prod-badge" style="background:#3a3a3a">Top</span>
+          </div>
+          <div class="prod-info">
+            <p class="marca">Viva Fit</p>
+            <h3>Macaquinho Jade Picon</h3>
+            <p class="preco"><strong>R$ 99,90</strong></p>
+            <p class="stars">★★★★☆ <span style="color:var(--mudo)">(31)</span></p>
+          </div>
+          <div class="prod-actions">
+            <button class="btn-cart">Adicionar ao carrinho</button>
+            <button class="btn-wish"><i class="fa fa-heart"></i></button>
+          </div>
+        </div>
+
+        <div class="prod-card">
+          <div class="prod-img">
+            <div class="ph"><i class="fa fa-image"></i><img src="img/produtos/top-vies-contrast-verde-01.webp" alt=""></div>
+            <span class="prod-badge">-20%</span>
+          </div>
+          <div class="prod-info">
+            <p class="marca">Viva Fit</p>
+            <h3>Conjunto short saia milena</h3>
+            <p class="preco"><s>R$ 279,90</s> <strong>R$ 219,90</strong></p>
+            <p class="stars">★★★★★ <span style="color:var(--mudo)">(62)</span></p>
+          </div>
+          <div class="prod-actions">
+            <button class="btn-cart">Adicionar ao carrinho</button>
+            <button class="btn-wish"><i class="fa fa-heart"></i></button>
+          </div>
+        </div>
+
+      </div>
+      <div style="text-align:center;margin-top:2.5rem;">
+        <a href="#" class="btn-outline" onclick="ir('loja')">Ver todos os produtos</a>
+      </div>
+    </div>
+
+    <!-- Banner meio -->
+    <div class="banner-mid">
+      <div>
+        <h2>Sustentabilidade<br/>que <span>veste bem</span></h2>
+        <p>70% das nossas peças são feitas com fibras recicladas. Moda com consciência, sem abrir mão do estilo.</p>
+      </div>
+      <a href="#" class="btn-primary" style="background:var(--acento)" onclick="ir('loja')">Linha Eco</a>
+    </div>
+
+    <!-- Depoimentos -->
+    <div class="depoimentos">
+      <p class="sec-label">Clientes</p>
+      <h2 class="sec-title">O que dizem sobre nós</h2>
+      <div class="dep-grid">
+        <div class="dep-card">
+          <div class="dep-stars">★★★★★</div>
+          <p>"A legging Sculpt Pro é incrível! Modelagem perfeita, não desce durante o treino e o tecido é muito confortável."</p>
+          <p class="dep-autor">— Ana Clara M., São Paulo</p>
+        </div>
+        <div class="dep-card">
+          <div class="dep-stars">★★★★★</div>
+          <p>"Recebi em 3 dias e a qualidade superou minhas expectativas. Com certeza vou comprar mais peças da VIVA FIT."</p>
+          <p class="dep-autor">— Fernanda T., Curitiba</p>
+        </div>
+        <div class="dep-card">
+          <div class="dep-stars">★★★★☆</div>
+          <p>"Conjunto lindo, cores vibrantes e tecido de alta qualidade. O atendimento também foi excelente no processo de troca."</p>
+          <p class="dep-autor">— Juliana R., Belo Horizonte</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <div class="foot-brand">
+        <div class="nav-logo">VIVA<span style="color:var(--acento)">FIT</span></div>
+        <p>Moda fitness que une performance, estilo e sustentabilidade. Fundada em 2019, São Paulo.</p>
+        <div class="foot-social">
+          <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://tiktok.com" target="_blank"><i class="fab fa-tiktok"></i></a>
+          <a href="https://wa.me/5511987654321" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h5>Loja</h5>
+        <ul>
+          <li><a href="#">Leggings</a></li>
+          <li><a href="#">Tops</a></li>
+          <li><a href="#">Conjuntos</a></li>
+          <li><a href="#">Shorts</a></li>
+          <li><a href="#">Linha Eco</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Atendimento</h5>
+        <ul>
+          <li><a href="#">Central de ajuda</a></li>
+          <li><a href="#" onclick="ir('faq')">FAQ</a></li>
+          <li><a href="#">Trocas e devoluções</a></li>
+          <li><a href="#">Rastrear pedido</a></li>
+          <li><a href="#" onclick="ir('contato')">Fale conosco</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Contato</h5>
+        <ul>
+          <li><a href="mailto:contato@vivafit.com.br">contato@vivafit.com.br</a></li>
+          <li><a href="tel:+5511987654321">(11) 9 8765-4321</a></li>
+          <li><a href="#">Seg–Sex 9h–18h</a></li>
+        </ul>
+      </div>
+    </footer>
+    <div class="foot-bottom">
+      <span>© 2026 VIVA FIT — Todos os direitos reservados</span>
+      <div class="pays">
+        <span class="pay-badge">VISA</span>
+        <span class="pay-badge">MASTER</span>
+        <span class="pay-badge">PIX</span>
+        <span class="pay-badge">BOLETO</span>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- ===================== LOJA ===================== -->
+  <section id="loja">
+    <div class="produtos" style="padding:3rem;background:var(--branco);min-height:80vh;">
+      <p class="sec-label">Coleção completa</p>
+      <h2 class="sec-title">Todos os produtos</h2>
+      <div class="prod-grid">
+        <div class="prod-card">
+          <div class="prod-img"><div class="ph"><i class="fa fa-image"></i><img src="img/produtos/legging-growth-lift-preto-01.webp" alt=""></div><span class="prod-badge">Novo</span></div>
+          <div class="prod-info"><p class="marca">Viva Fit</p><h3>Legging Sculpt Pro</h3><p class="preco"><s>R$ 189,90</s> <strong>R$ 149,90</strong></p><p class="stars">★★★★★</p></div>
+          <div class="prod-actions"><button class="btn-cart">Adicionar ao carrinho</button><button class="btn-wish"><i class="fa fa-heart"></i></button></div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img"><div class="ph"><i class="fa fa-image"></i><img src="img/produtos/top11.webp" alt=""></div></div>
+          <div class="prod-info"><p class="marca">Viva Fit</p><h3>Top Sustain Move</h3><p class="preco"><strong>R$ 99,90</strong></p><p class="stars">★★★★☆</p></div>
+          <div class="prod-actions"><button class="btn-cart">Adicionar ao carrinho</button><button class="btn-wish"><i class="fa fa-heart"></i></button></div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img"><div class="ph"><i class="fa fa-image"></i><img src="img/produtos/legging-growth-bolsos-azul-01.webp" alt=""></div><span class="prod-badge">-20%</span></div>
+          <div class="prod-info"><p class="marca">Viva Fit</p><h3>Conjunto Flow Zen</h3><p class="preco"><s>R$ 279,90</s> <strong>R$ 219,90</strong></p><p class="stars">★★★★★</p></div>
+          <div class="prod-actions"><button class="btn-cart">Adicionar ao carrinho</button><button class="btn-wish"><i class="fa fa-heart"></i></button></div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img"><div class="ph"><i class="fa fa-image"></i><img src="img/produtos/short_.webp" alt=""></div></div>
+          <div class="prod-info"><p class="marca">Viva Fit</p><h3>Short Power Run</h3><p class="preco"><strong>R$ 119,90</strong></p><p class="stars">★★★★★</p></div>
+          <div class="prod-actions"><button class="btn-cart">Adicionar ao carrinho</button><button class="btn-wish"><i class="fa fa-heart"></i></button></div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img"><div class="ph"><i class="fa fa-image"></i><img src="img/produtos/legging_cinza.webp" alt=""></div><span class="prod-badge" style="background:#3a3a3a">Eco</span></div>
+          <div class="prod-info"><p class="marca">Viva Fit</p><h3>Legging Eco Rise</h3><p class="preco"><strong>R$ 169,90</strong></p><p class="stars">★★★★★</p></div>
+          <div class="prod-actions"><button class="btn-cart">Adicionar ao carrinho</button><button class="btn-wish"><i class="fa fa-heart"></i></button></div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img"><div class="ph"><i class="fa fa-image"></i><img src="img/produtos/macaquinho1.webp" alt=""></div></div>
+          <div class="prod-info"><p class="marca">Viva Fit</p><h3>Macaquinho Urban Sport</h3><p class="preco"><s>R$ 129,90</s> <strong>R$ 109,90</strong></p><p class="stars">★★★★☆</p></div>
+          <div class="prod-actions"><button class="btn-cart">Adicionar ao carrinho</button><button class="btn-wish"><i class="fa fa-heart"></i></button></div>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="foot-brand">
+        <div class="nav-logo">VIVA<span style="color:var(--acento)">FIT</span></div>
+        <p>Moda fitness que une performance e estilo. São Paulo, SP.</p>
+        <div class="foot-social">
+          <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://wa.me/5511987654321" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="foot-col"><h5>Loja</h5><ul><li><a href="#">Leggings</a></li><li><a href="#">Tops</a></li><li><a href="#">Conjuntos</a></li></ul></div>
+      <div class="foot-col"><h5>Atendimento</h5><ul><li><a href="#" onclick="ir('faq')">FAQ</a></li><li><a href="#">Trocas</a></li><li><a href="#">Rastreio</a></li></ul></div>
+      <div class="foot-col"><h5>Contato</h5><ul><li><a href="mailto:contato@vivafit.com.br">contato@vivafit.com.br</a></li><li><a href="tel:+5511987654321">(11) 9 8765-4321</a></li></ul></div>
+    </footer>
+    <div class="foot-bottom"><span>© 2026 VIVA FIT</span><div class="pays"><span class="pay-badge">VISA</span><span class="pay-badge">MASTER</span><span class="pay-badge">PIX</span></div></div>
+  </section>
+
+
+  <!-- ===================== PARCEIROS ===================== -->
+  <section id="parceiros">
+    <div class="parceiros-sec" style="background:var(--branco);min-height:70vh;">
+      <p class="sec-label">Quem acredita em nós</p>
+      <h2 class="sec-title">Nossos parceiros</h2>
+      <div class="par-grid">
+        <div class="par-card"><div class="par-logo">SL</div><h4>SportLine Tecidos</h4><p>Fornecedor premium de tecidos dry-fit e supplex com certificação OEKO-TEX.</p></div>
+        <div class="par-card"><div class="par-logo">FZ</div><h4>Fitzone Academia</h4><p>Rede de academias parceira com desconto exclusivo para clientes VIVA FIT.</p></div>
+        <div class="par-card"><div class="par-logo">NS</div><h4>NutriSmart</h4><p>Plataforma de nutrição esportiva com planos personalizados para atletas.</p></div>
+        <div class="par-card"><div class="par-logo">EC</div><h4>EcoColor Tinturaria</h4><p>Tingimento sustentável com corantes naturais e baixo impacto ambiental.</p></div>
+        <div class="par-card"><div class="par-logo">RM</div><h4>Run&More</h4><p>Loja especializada em corrida e triathlon. Parceria para kits de treino.</p></div>
+        <div class="par-card"><div class="par-logo">BW</div><h4>BodyWave Studio</h4><p>Estúdio de pilates com desconto especial para membros VIVA FIT.</p></div>
+      </div>
+    </div>
+    <footer>
+      <div class="foot-brand"><div class="nav-logo">VIVA<span style="color:var(--acento)">FIT</span></div><p>Moda fitness — São Paulo, SP.</p><div class="foot-social"><a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a><a href="https://wa.me/5511987654321" target="_blank"><i class="fab fa-whatsapp"></i></a></div></div>
+      <div class="foot-col"><h5>Loja</h5><ul><li><a href="#" onclick="ir('loja')">Ver produtos</a></li><li><a href="#">Linha Eco</a></li></ul></div>
+      <div class="foot-col"><h5>Atendimento</h5><ul><li><a href="#" onclick="ir('faq')">FAQ</a></li><li><a href="#" onclick="ir('contato')">Contato</a></li></ul></div>
+      <div class="foot-col"><h5>Contato</h5><ul><li><a href="mailto:contato@vivafit.com.br">contato@vivafit.com.br</a></li><li><a href="tel:+5511987654321">(11) 9 8765-4321</a></li></ul></div>
+    </footer>
+    <div class="foot-bottom"><span>© 2026 VIVA FIT</span><div class="pays"><span class="pay-badge">PIX</span><span class="pay-badge">VISA</span></div></div>
+  </section>
+
+
+  <!-- ===================== FAQ ===================== -->
+  <section id="faq">
+    <div style="padding:4rem 3rem;background:var(--cinza);min-height:20vh;">
+      <p class="sec-label">Dúvidas</p>
+      <h2 class="sec-title">Perguntas frequentes</h2>
+    </div>
+    <div class="faq-sec">
+      <div class="faq-item" onclick="this.classList.toggle('aberto')">
+        <div class="faq-q">Como funciona a tabela de medidas?<i class="fa fa-chevron-down"></i></div>
+        <div class="faq-a">Nossa tabela vai do PP ao GG. Recomendamos tirar as medidas de busto, cintura e quadril e comparar com a tabela disponível em cada produto. Em caso de dúvida entre dois tamanhos, sugerimos o maior para melhor conforto durante o treino.</div>
+      </div>
+      <div class="faq-item" onclick="this.classList.toggle('aberto')">
+        <div class="faq-q">Qual o prazo de entrega?<i class="fa fa-chevron-down"></i></div>
+        <div class="faq-a">Capitais recebem em até 5 dias úteis; demais cidades, em até 10 dias úteis. Pedidos acima de R$199 têm frete grátis para todo o Brasil. Você recebe o código de rastreio por e-mail assim que o pedido é despachado.</div>
+      </div>
+      <div class="faq-item" onclick="this.classList.toggle('aberto')">
+        <div class="faq-q">Posso trocar ou devolver um produto?<i class="fa fa-chevron-down"></i></div>
+        <div class="faq-a">Sim! Aceitamos trocas e devoluções em até 30 dias após o recebimento, desde que a peça esteja com etiqueta e sem uso. Entre em contato pelo e-mail ou WhatsApp para iniciar o processo. O frete de retorno é por nossa conta na primeira troca.</div>
+      </div>
+      <div class="faq-item" onclick="this.classList.toggle('aberto')">
+        <div class="faq-q">Os tecidos são sustentáveis?<i class="fa fa-chevron-down"></i></div>
+        <div class="faq-a">Trabalhamos com fornecedores certificados e priorizamos tecidos reciclados e processos de baixo impacto ambiental. Nossa linha ECO utiliza 70% de fibras recicladas pós-consumo.</div>
+      </div>
+      <div class="faq-item" onclick="this.classList.toggle('aberto')">
+        <div class="faq-q">Posso lavar na máquina?<i class="fa fa-chevron-down"></i></div>
+        <div class="faq-a">Sim, mas recomendamos lavar com água fria (máx. 30°C), ciclo delicado e sem amaciante. Seque sempre à sombra e nunca use secadora para preservar a elasticidade do tecido.</div>
+      </div>
+      <div class="faq-item" onclick="this.classList.toggle('aberto')">
+        <div class="faq-q">Vocês fazem pedidos personalizados para empresas?<i class="fa fa-chevron-down"></i></div>
+        <div class="faq-a">Sim! Atendemos academias, empresas e equipes esportivas com pedidos acima de 20 peças. Oferecemos sublimação com logo e cores personalizadas. Entre em contato pelo e-mail comercial@vivafit.com.br para orçamento.</div>
+      </div>
+      <div class="faq-item" onclick="this.classList.toggle('aberto')">
+        <div class="faq-q">Quais formas de pagamento são aceitas?<i class="fa fa-chevron-down"></i></div>
+        <div class="faq-a">Aceitamos Visa, Mastercard, Elo, PIX (com 5% de desconto) e boleto bancário. Parcelamos em até 10x sem juros no cartão de crédito para compras acima de R$199.</div>
+      </div>
+    </div>
+    <footer style="margin-top:2rem;">
+      <div class="foot-brand"><div class="nav-logo">VIVA<span style="color:var(--acento)">FIT</span></div><p>Moda fitness — São Paulo, SP.</p><div class="foot-social"><a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a><a href="https://wa.me/5511987654321" target="_blank"><i class="fab fa-whatsapp"></i></a></div></div>
+      <div class="foot-col"><h5>Loja</h5><ul><li><a href="#" onclick="ir('loja')">Ver produtos</a></li></ul></div>
+      <div class="foot-col"><h5>Atendimento</h5><ul><li><a href="#" onclick="ir('contato')">Fale conosco</a></li></ul></div>
+      <div class="foot-col"><h5>Contato</h5><ul><li><a href="mailto:contato@vivafit.com.br">contato@vivafit.com.br</a></li><li><a href="tel:+5511987654321">(11) 9 8765-4321</a></li></ul></div>
+    </footer>
+    <div class="foot-bottom"><span>© 2026 VIVA FIT</span><div class="pays"><span class="pay-badge">PIX</span><span class="pay-badge">VISA</span><span class="pay-badge">BOLETO</span></div></div>
+  </section>
+
+
+  <!-- ===================== CONTATO ===================== -->
+  <section id="contato">
+    <div style="padding:4rem 3rem;background:var(--branco);min-height:80vh;max-width:640px;">
+      <p class="sec-label">Fale conosco</p>
+      <h2 class="sec-title">Envie uma mensagem</h2>
+      <p style="font-size:.85rem;color:var(--mudo);margin-bottom:2rem;line-height:1.7;">
+        Nosso time responde em até 24h úteis. Para atendimento mais rápido, use o WhatsApp.
+      </p>
+      <div class="w3-row-padding" style="margin:0 -8px;">
+        <div class="w3-col m6" style="padding:0 8px;margin-bottom:1rem;">
+          <label style="font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mudo);">Nome</label>
+          <input class="w3-input w3-border" type="text" placeholder="Seu nome" style="margin-top:.4rem;font-family:'DM Sans',sans-serif;border-color:var(--borda);"/>
+        </div>
+        <div class="w3-col m6" style="padding:0 8px;margin-bottom:1rem;">
+          <label style="font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mudo);">E-mail</label>
+          <input class="w3-input w3-border" type="email" placeholder="seu@email.com" style="margin-top:.4rem;font-family:'DM Sans',sans-serif;border-color:var(--borda);"/>
+        </div>
+        <div class="w3-col s12" style="padding:0 8px;margin-bottom:1rem;">
+          <label style="font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mudo);">Assunto</label>
+          <input class="w3-input w3-border" type="text" placeholder="Como podemos ajudar?" style="margin-top:.4rem;font-family:'DM Sans',sans-serif;border-color:var(--borda);"/>
+        </div>
+        <div class="w3-col s12" style="padding:0 8px;margin-bottom:1.5rem;">
+          <label style="font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mudo);">Mensagem</label>
+          <textarea class="w3-input w3-border" rows="5" placeholder="Descreva sua dúvida ou solicitação..." style="margin-top:.4rem;font-family:'DM Sans',sans-serif;border-color:var(--borda);resize:vertical;"></textarea>
+        </div>
+        <div class="w3-col s12" style="padding:0 8px;">
+          <button class="btn-primary">Enviar mensagem</button>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="foot-brand"><div class="nav-logo">VIVA<span style="color:var(--acento)">FIT</span></div><p>Moda fitness — São Paulo, SP.</p><div class="foot-social"><a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a><a href="https://wa.me/5511987654321" target="_blank"><i class="fab fa-whatsapp"></i></a></div></div>
+      <div class="foot-col"><h5>Loja</h5><ul><li><a href="#" onclick="ir('loja')">Ver produtos</a></li></ul></div>
+      <div class="foot-col"><h5>Atendimento</h5><ul><li><a href="#" onclick="ir('faq')">FAQ</a></li></ul></div>
+      <div class="foot-col"><h5>Contato</h5><ul><li><a href="mailto:contato@vivafit.com.br">contato@vivafit.com.br</a></li><li><a href="tel:+5511987654321">(11) 9 8765-4321</a></li></ul></div>
+    </footer>
+    <div class="foot-bottom"><span>© 2026 VIVA FIT</span><div class="pays"><span class="pay-badge">PIX</span><span class="pay-badge">VISA</span></div></div>
+  </section>
+
+
+  <script>
+    function ir(id) {
+      document.querySelectorAll('section').forEach(s => s.classList.remove('ativa'));
+      document.getElementById(id).classList.add('ativa');
+      window.scrollTo(0,0);
+      return false;
+    }
+  </script>
+
+</body>
+</html>
